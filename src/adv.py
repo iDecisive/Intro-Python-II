@@ -25,14 +25,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].n_to = 'foyer' #room['foyer']
+room['foyer'].s_to = 'outside' #room['outside']
+room['foyer'].n_to = 'overlook' #room['overlook']
+room['foyer'].e_to = 'narrow' #room['narrow']
+room['overlook'].s_to = 'foyer' #room['foyer']
+room['narrow'].w_to = 'foyer' #room['foyer']
+room['narrow'].n_to = 'treasure' #room['treasure']
+room['treasure'].s_to = 'narrow' #room['narrow']
 
 #
 # Main
@@ -52,3 +52,22 @@ player1 = Player('thelegend27', 'outside')
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    print('\nIn room:', room[player1.current_room].name)
+    print('\nRoom description:', room[player1.current_room].description)
+    direction = input('\nWhat path will you take? ')
+    if direction == 'n' or direction == 's' or direction == 'e' or direction == 'w': #check works
+        nextRoom = getattr(room[player1.current_room], direction + '_to') #Key of next room
+        if nextRoom != '':
+            player1.current_room = nextRoom #Moves to next toom
+            print(f'Moved to {room[player1.current_room].name}!')
+        else:
+            print("Can't move there!")
+        pass
+    elif direction == 'q':
+        print('See ya!')
+        break
+    else:
+        print('Enter one of the following: "N" "S" "E" "W"')
+    
